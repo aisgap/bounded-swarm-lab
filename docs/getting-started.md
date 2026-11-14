@@ -6,7 +6,7 @@ The repository contains no live Site identity, database, credential, run history
 
 ## Requirements
 
-- Node.js 22.13 or newer
+- Node.js 22.15 or newer
 - npm and the locked dependency set in `package-lock.json`
 - OpenAI Sites for the supported hosted identity boundary
 - A new D1 database for hosted Live experiments
