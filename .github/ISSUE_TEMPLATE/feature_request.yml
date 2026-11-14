@@ -1,0 +1,51 @@
+name: Feature request
+description: Propose a bounded, testable improvement.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposals must preserve deterministic limits, manual provider control, confidential-content boundaries, and fail-closed cost accounting.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user or operator problem should be solved?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful behavior change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: bounds
+    attributes:
+      label: Required bounds and failure behavior
+      description: State call, token, time, concurrency, retry, spend, data-retention, and unknown-outcome behavior that applies.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List deterministic success and failure-path tests.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: This proposal does not require secrets or confidential work content in public issues or CI.
+          required: true
+        - label: This proposal does not introduce automatic provider retries or unbounded execution.
+          required: true

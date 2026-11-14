@@ -1,0 +1,21 @@
+exit-code: 1
+format: table
+severity:
+  - HIGH
+  - CRITICAL
+
+pkg:
+  include-dev-deps: true
+
+scan:
+  scanners:
+    - vuln
+  skip-dirs:
+    - node_modules
+    - dist
+    - .next
+    - .wrangler
+    - .git
+
+vulnerability:
+  ignore-unfixed: false

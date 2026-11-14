@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -eu
+
+zero_oid="0000000000000000000000000000000000000000"
+head_oid="$(git rev-parse --verify HEAD)"
+saw_new_code=0
+
+while IFS=' ' read -r local_ref local_oid remote_ref remote_oid; do
+  if [ "$local_oid" = "$zero_oid" ]; then
+    # Deleting a remote ref introduces no code to scan.
+    continue
+  fi
+
+  commit_oid="$(git rev-parse --verify "${local_oid}^{commit}" 2>/dev/null)" || {
+    echo "Security scan blocked the push: ${local_ref} does not resolve to a commit." >&2
+    exit 1
+  }
+
+  if [ "$commit_oid" != "$head_oid" ]; then
+    echo "Security scan blocked the push: ${local_ref} is not the checked-out HEAD." >&2
+    echo "Check out that branch or commit and push it separately so the exact code is scanned." >&2
+    exit 1
+  fi
+
+  saw_new_code=1
+done
+
+if [ "$saw_new_code" -eq 0 ]; then
+  exit 0
+fi
+
+if [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
+  echo "Security scan blocked the push: the working tree is not clean." >&2
+  echo "Commit, stash, or remove local changes so the scanned files exactly match HEAD." >&2
+  exit 1
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+echo "Running mandatory Trivy and Grype vulnerability scans before push..."
+exec node scripts/security/scan-vulnerabilities.mjs
