@@ -11,7 +11,7 @@ Bounded Swarm Lab is an experimental safety-oriented project. Contributions are 
 
 ## Local checks
 
-Use Node.js 22.15 or newer. Install the locked dependency set, then run the complete gate:
+Use Node.js 22.18 or newer. Install the locked dependency set, then run the complete gate:
 
 ```text
 npm run install:ci

@@ -46,7 +46,7 @@ The repository contains no active Site identity, database, credential, run histo
 
 ## Simulation-only quick start
 
-Requirements: Node.js 22.15 or newer and npm.
+Requirements: Node.js 22.18 or newer and npm.
 
 ```text
 npm run install:ci
